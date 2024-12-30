@@ -2,7 +2,10 @@ const express = require('express');
 require('dotenv').config(); // Carregar variáveis de ambiente
 
 const app = express();
-const port = process.env.PORT || 4000;  // Usar a porta fornecida pelo Render
+const port = process.env.PORT || 4000; // Usar a porta fornecida pelo Render
+
+// Middleware para interpretar JSON
+app.use(express.json());
 
 // Rota de exemplo
 app.get('/', (req, res) => {
