@@ -1,23 +1,15 @@
-const fastify = require('fastify')({ logger: true });
-const jwt = require('fastify-jwt');
+const express = require('express');
+const jwt = require('express-jwt');
 require('dotenv').config(); // Carregar variáveis de ambiente
 
-// Configuração do JWT usando variável de ambiente
-fastify.register(jwt, { secret: process.env.JWT_SECRET || 'defaultsecret' }); // Usar variáveis de ambiente
-
-// Rotas aqui...
-
-// Iniciar servidor
-const express = require('express')
-const app = express()
+const app = express();
 const port = process.env.PORT || 4000;
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+// Configuração do JWT usando variável de ambiente
+app.use(jwt({ secret: process.env.JWT_SECRET || 'defaultsecret', algorithms: ['HS256'] }).unless({ path: ['/'] }));
 
-app.listen(port, () => {
-  console.log(`Servidor está rodando em  ${port}`)
-})
 
-start();
+// Iniciar servidor
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Servidor está rodando em http://0.0.0.0:${port}`);
+});
