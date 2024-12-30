@@ -10,8 +10,9 @@ fastify.register(jwt, { secret: process.env.JWT_SECRET || 'defaultsecret' }); //
 // Iniciar servidor
 const start = async () => {
     try {
-        await fastify.listen(3000);
-        fastify.log.info(`Servidor rodando em http://localhost:3000`);
+        const port = process.env.PORT || 3000;  // Usar PORT se definida, caso contrário, usar 3000
+        await fastify.listen(port, '0.0.0.0'); // Configurar para escutar na interface pública
+        fastify.log.info(`Servidor rodando em http://localhost:${port}`);
     } catch (err) {
         fastify.log.error(err);
         process.exit(1);
