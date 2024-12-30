@@ -1,15 +1,15 @@
 const express = require('express');
-const jwt = require('express-jwt');
 require('dotenv').config(); // Carregar variáveis de ambiente
 
 const app = express();
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 4000;  // Usar a porta fornecida pelo Render
 
-// Configuração do JWT usando variável de ambiente
-app.use(jwt({ secret: process.env.JWT_SECRET || 'defaultsecret', algorithms: ['HS256'] }).unless({ path: ['/'] }));
+// Rota de exemplo
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
 
-
-// Iniciar servidor
+// Iniciar servidor na interface pública (0.0.0.0) para ser acessível externamente
 app.listen(port, '0.0.0.0', () => {
   console.log(`Servidor está rodando em http://0.0.0.0:${port}`);
 });
